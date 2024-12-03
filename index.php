@@ -3,6 +3,7 @@ require_once 'db/connect.php';
 require_once 'includes/header.php';
 require_once 'models/category.php';
 require_once 'models/product.php';
+require_once 'models/User.php';
 ?>
 
 <!-- Banner Section -->

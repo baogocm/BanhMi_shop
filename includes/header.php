@@ -1,3 +1,32 @@
+<?php
+require_once 'db/connect.php';
+require_once 'models/User.php'; 
+
+session_start();
+
+if (isset($_SESSION['login_success']) && $_SESSION['login_success'] == true) {
+    echo "<script>
+        toastr.success('Đăng nhập thành công!');
+    </script>";
+    unset($_SESSION['login_success']);  // Xóa thông báo login thành công
+}
+
+// Kiểm tra nếu đăng nhập thành công
+if (isset($_SESSION['login_success']) && $_SESSION['login_success'] == true) {
+    echo "<script>
+        toastr.success('Đăng nhập thành công!');
+    </script>";
+    unset($_SESSION['login_success']);  // Xóa thông báo sau khi đã hiển thị
+}
+
+// Tự động load CSS dựa trên tên file PHP hiện tại
+$current_page = basename($_SERVER['PHP_SELF'], '.php');
+if (file_exists("css/pages/{$current_page}.css")) {
+    echo "<link rel='stylesheet' href='css/pages/{$current_page}.css'>";
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -7,13 +36,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <?php
-    // Tự động load CSS dựa trên tên file PHP hiện tại
-    $current_page = basename($_SERVER['PHP_SELF'], '.php');
-    if (file_exists("css/pages/{$current_page}.css")) {
-        echo "<link rel='stylesheet' href='css/pages/{$current_page}.css'>";
-    }
-    ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
@@ -47,15 +70,26 @@
                         <a class="nav-link" href="contact.php"><i class="fas fa-phone"></i> Liên Hệ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.php"><i class="fas fa-user"></i> Đăng nhập</a>
+                        <?php if (isset($_SESSION['username'])): ?>
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-user"></i> <?= htmlspecialchars($_SESSION['username']); ?>
+                            </a>
+                            <a class="nav-link" href="logout.php">
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                            </a>
+                        <?php else: ?>
+                            <a class="nav-link" href="login.php">
+                                <i class="fas fa-user"></i> Đăng nhập
+                            </a>
+                        <?php endif; ?>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Add Bootstrap JS and its dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 </html>
