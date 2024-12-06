@@ -1,10 +1,8 @@
 <?php
 require 'db/connect.php';
-
 session_start();
 
-
-// Bật hiển thị lỗi để debug
+// Bật hiển thị lỗi (cho môi trường phát triển)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -12,26 +10,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Truy vấn lấy thông tin người dùng từ bảng users
+    // Truy vấn lấy thông tin người dùng
     $sql = "SELECT * FROM users WHERE username = ?";
     $stm = $conn->prepare($sql);
     $stm->execute([$username]);
     $user = $stm->fetch(PDO::FETCH_ASSOC);
 
-    // Kiểm tra thông tin đăng nhập
-	if ($user && $user['password'] === md5($password)) { // Sử dụng MD5 để kiểm tra mật khẩu
-		// Lưu thông tin vào session
-		$_SESSION['user_id'] = $user['id'];
-		$_SESSION['username'] = $user['username'];
-	
-		// Chuyển hướng đến index.php với thông báo thành công
-		header("Location: index.php?login_success=1");
-		exit();
-	} else {
-		// Hiển thị thông báo thất bại
-		echo "<script>toastr.error('Sai tên đăng nhập hoặc mật khẩu.');</script>";
-	}
-	
+    if ($user && md5($password) === $user['password']) {
+        // Lưu thông tin vào session
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role']; // Thêm role vào session
+
+        // Chuyển hướng theo vai trò
+        if ($_SESSION['role'] == 1) {
+            header("Location: dashboard/dashboard.php");
+        } else {
+            header("Location: index.php");
+        }
+        exit();
+    } else {
+        echo "<script>toastr.error('Sai tên đăng nhập hoặc mật khẩu.');</script>";
+    }
 }
 ?>
 

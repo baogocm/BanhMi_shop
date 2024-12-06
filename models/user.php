@@ -12,32 +12,31 @@ class User {
 
     // Hàm đăng nhập
     public function login($username, $password) {
-        // Tạo câu truy vấn SQL để lấy thông tin người dùng theo username
         $sql = "SELECT * FROM users WHERE username = :username LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
-        
+    
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
-        // Kiểm tra nếu tìm thấy người dùng
         if ($user) {
-            // Kiểm tra mật khẩu với hàm password_verify
             if (password_verify($password, $user['password'])) {
-                // Lưu thông tin người dùng vào session
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];  // Lưu tên người dùng vào session
-                
-                // Đặt thông báo đăng nhập thành công vào session
-                $_SESSION['login_success'] = true;
-                return true;
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role']; // Lưu quyền vào session
+    
+                // Chuyển hướng dựa trên role
+                if ($user['role'] == 1) {
+                    header("Location: dashboard/dashboard.php");
+                } else {
+                    header("Location: index.php");
+                }
+                exit();
             } else {
-                // Mật khẩu không đúng
-                return false;
+                return false; // Sai mật khẩu
             }
         } else {
-            // Không tìm thấy người dùng với tên đăng nhập đã nhập
-            return false;
+            return false; // Không tìm thấy người dùng
         }
     }
     
@@ -80,5 +79,14 @@ class User {
             };
             toastr.$type('$message');
         </script>";
+    }
+
+
+    function getAllUsers($conn) {
+        $sql = "SELECT id, email, username, password FROM users";
+        $stm = $conn->prepare($sql);  // Sử dụng prepare để tránh SQL Injection
+        $stm->execute();  // Thực thi câu lệnh SQL
+    
+        return $stm->fetchAll(PDO::FETCH_ASSOC);  // Trả về tất cả dữ liệu người dùng dưới dạng mảng kết hợp
     }
 }
