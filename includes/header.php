@@ -48,10 +48,10 @@ if (file_exists("css/pages/{$current_page}.css")) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <form class="form-inline my-2 my-lg-0 mr-auto">
                     <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                        <input class="form-control" type="search" placeholder="Tìm kiếm..." aria-label="Search">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit">
-                                <i class="fas fa-search"></i>
+                            <button class="search-btn" type="submit">
+                                <i class="fas fa-search"></i> Tìm kiếm
                             </button>
                         </div>
                     </div>
@@ -69,9 +69,9 @@ if (file_exists("css/pages/{$current_page}.css")) {
                     <li class="nav-item">
                         <a class="nav-link" href="contact.php"><i class="fas fa-phone"></i> Liên Hệ</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-flex">
                         <?php if (isset($_SESSION['username'])): ?>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link me-2" href="#">
                                 <i class="fas fa-user"></i> <?= htmlspecialchars($_SESSION['username']); ?>
                             </a>
                             <a class="nav-link" href="logout.php">

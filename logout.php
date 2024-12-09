@@ -1,16 +1,20 @@
 <?php
-session_start();  // Khởi tạo session
+require_once 'models/user.php';
+require_once 'db/connect.php';
 
-// Xóa tất cả các biến session
-session_unset();
+session_start();
 
-// Hủy session
-session_destroy();
+// Khởi tạo đối tượng User
+$userModel = new User($conn);
 
-// Đặt thông báo đăng xuất thành công vào session
-$_SESSION['logout_success'] = true;
+// Xử lý đăng xuất
+if ($userModel->logout()) {
+    // Tạo session mới để lưu thông báo
+    session_start();
+    $_SESSION['message'] = "Đăng xuất thành công!";
+}
 
-// Chuyển hướng về trang chủ sau khi đăng xuất
-header("Location: index.php");
+// Chuyển hướng về trang đăng nhập
+header("Location: login.php");
 exit();
 ?>
