@@ -15,6 +15,6 @@ if ($userModel->logout()) {
 }
 
 // Chuyển hướng về trang đăng nhập
-header("Location: login.php");
+header("Location: index.php");
 exit();
 ?>

@@ -57,7 +57,7 @@ require_once 'models/User.php';
                 echo "</div>";
                 echo "<div class='product-bottom'>";
                 echo "<div class='product-price'>" . number_format($product['price'], 0, ',', '.') . " VND</div>";
-                echo "<button class='btn-add-cart' data-product-id='" . $product['id'] . "'><i class='fas fa-shopping-cart'></i> Thêm vào giỏ hàng</button>";
+                echo "<button class='btn-add-cart' data-product-id='" . $product['id'] . "'>Thêm vào giỏ hàng</button>";
                 echo "</div>";
                 echo "</div></div>";
             }

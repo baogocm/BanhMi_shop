@@ -5,29 +5,35 @@ require_once 'models/Cart.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
-    $action = $data['action'];
-    $productId = $data['productId'];
+    $action = $data['action'] ?? null;
+    $productId = $data['productId'] ?? null;
+    $quantity = $data['quantity'] ?? 1;
 
-    // Khởi tạo model Cart
     $cartModel = new Cart($conn);
 
-    if ($action === 'increase') {
-        if ($cartModel->increaseQuantity($productId)) {
-            echo json_encode(['success' => true, 'message' => 'Số lượng sản phẩm đã tăng lên.']);
+    if ($action === 'add') {
+        if ($cartModel->addToCart($productId, $quantity)) {
+            echo json_encode(['success' => true, 'message' => 'Sản phẩm đã được thêm vào giỏ hàng.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Không thể tăng số lượng sản phẩm.']);
-        }
-    } elseif ($action === 'decrease') {
-        if ($cartModel->decreaseQuantity($productId)) {
-            echo json_encode(['success' => true, 'message' => 'Số lượng sản phẩm đã giảm!']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Không thể giảm số lượng sản phẩm.']);
+            echo json_encode(['success' => false, 'message' => 'Không thể thêm sản phẩm.']);
         }
     } elseif ($action === 'remove') {
         if ($cartModel->removeFromCart($productId)) {
-            echo json_encode(['success' => true, 'message' => 'Sản phẩm đã được xóa khỏi giỏ hàng.']);
+            echo json_encode(['success' => true, 'message' => 'Sản phẩm đã được xóa.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Không thể xóa sản phẩm khỏi giỏ hàng.']);
+            echo json_encode(['success' => false, 'message' => 'Không thể xóa sản phẩm.']);
+        }
+    } elseif ($action === 'increase') {
+        if ($cartModel->increaseQuantity($productId)) {
+            echo json_encode(['success' => true, 'message' => 'Tăng số lượng thành công.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Không thể tăng số lượng.']);
+        }
+    } elseif ($action === 'decrease') {
+        if ($cartModel->decreaseQuantity($productId)) {
+            echo json_encode(['success' => true, 'message' => 'Giảm số lượng thành công.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Không thể giảm số lượng.']);
         }
     }
 }

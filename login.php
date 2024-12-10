@@ -1,4 +1,5 @@
-<?phprequire 'db/connect.php';
+<?php
+require 'db/connect.php';
 session_start();
 require_once 'db/connect.php';
 require_once 'models/user.php';

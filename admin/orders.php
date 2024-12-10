@@ -16,6 +16,8 @@ $sql = "SELECT o.*, u.username
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $orders = $stmt->fetchAll();
+
+
 ?>
 
 <!DOCTYPE html>

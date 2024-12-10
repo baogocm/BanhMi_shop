@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const buttonsIncrease = document.querySelectorAll('.btn-increase-quantity');
-    const buttonsDecrease = document.querySelectorAll('.btn-decrease-quantity');
-    const buttonsRemove = document.querySelectorAll('.btn-remove-cart');
+    const buttonsAddCart = document.querySelectorAll('.btn-add-cart');
 
-    buttonsIncrease.forEach(button => {
+    buttonsAddCart.forEach(button => {
         button.addEventListener('click', function () {
             const productId = this.getAttribute('data-product-id');
 
@@ -12,61 +10,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ action: 'increase', productId })
+                body: JSON.stringify({ action: 'add', productId, quantity: 1 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Số lượng sản phẩm đã tăng!');
-                    // Update UI or refresh the cart
-                } else {
-                    alert(data.message || 'Có lỗi xảy ra!');
-                }
-            })
-            .catch(err => console.error('Lỗi:', err));
-        });
-    });
-
-    buttonsDecrease.forEach(button => {
-        button.addEventListener('click', function () {
-            const productId = this.getAttribute('data-product-id');
-
-            fetch('cart_add.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ action: 'decrease', productId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Số lượng sản phẩm đã giảm!');
-                    // Update UI or refresh the cart
-                } else {
-                    alert(data.message || 'Có lỗi xảy ra!');
-                }
-            })
-            .catch(err => console.error('Lỗi:', err));
-        });
-    });
-
-    buttonsRemove.forEach(button => {
-        button.addEventListener('click', function () {
-            const productId = this.getAttribute('data-product-id');
-
-            fetch('cart_add.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ action: 'remove', productId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Sản phẩm đã được xóa khỏi giỏ hàng!');
-                    // Update UI or refresh the cart
+                    alert(data.message);
+                    location.reload();
                 } else {
                     alert(data.message || 'Có lỗi xảy ra!');
                 }
@@ -75,3 +25,50 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+document.addEventListener('DOMContentLoaded', function () {
+    // Nút tăng số lượng
+    document.querySelectorAll('.btn-increase-quantity').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const productId = this.getAttribute('data-product-id');
+            updateCart('increase', productId);
+        });
+    });
+
+    // Nút giảm số lượng
+    document.querySelectorAll('.btn-decrease-quantity').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const productId = this.getAttribute('data-product-id');
+            updateCart('decrease', productId);
+        });
+    });
+
+    // Nút xóa sản phẩm
+    document.querySelectorAll('.btn-remove-from-cart').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const productId = this.getAttribute('data-product-id');
+            updateCart('remove', productId);
+        });
+    });
+
+    // Hàm cập nhật giỏ hàng
+    function updateCart(action, productId) {
+        fetch('cart_add.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ action: action, productId: productId }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload(); // Refresh trang sau khi cập nhật
+                } else {
+                    alert(data.message || 'Có lỗi xảy ra!');
+                }
+            })
+            .catch((err) => console.error('Lỗi:', err));
+    }
+});
+
