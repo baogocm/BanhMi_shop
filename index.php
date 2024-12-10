@@ -6,6 +6,7 @@ require_once 'models/product.php';
 require_once 'models/User.php';
 ?>
 
+
 <!-- Banner Section -->
 <div class="banner-section">
     <div class="banner-container">
@@ -39,6 +40,7 @@ require_once 'models/User.php';
 <!-- Featured Products Section -->
 <div class="featured-products">
     <div class="container">
+        
         <h2 class="section-title">Sản Phẩm Nổi Bật</h2>
         <div class="products-grid">
             <?php
@@ -55,7 +57,7 @@ require_once 'models/User.php';
                 echo "</div>";
                 echo "<div class='product-bottom'>";
                 echo "<div class='product-price'>" . number_format($product['price'], 0, ',', '.') . " VND</div>";
-                echo "<button class='btn-add-cart'><i class='fas fa-shopping-cart'></i> Thêm vào giỏ hàng</button>";
+                echo "<button class='btn-add-cart' data-product-id='" . $product['id'] . "'><i class='fas fa-shopping-cart'></i> Thêm vào giỏ hàng</button>";
                 echo "</div>";
                 echo "</div></div>";
             }

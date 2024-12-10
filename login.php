@@ -1,18 +1,8 @@
-<?php
-<<<<<<< HEAD
-require 'db/connect.php';
-=======
->>>>>>> 8677703faa6a9bfb0ecef8d5b05cb56b4fd31415
+<?phprequire 'db/connect.php';
 session_start();
 require_once 'db/connect.php';
 require_once 'models/user.php';
 
-<<<<<<< HEAD
-// Bật hiển thị lỗi (cho môi trường phát triển)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-=======
 // Nếu đã đăng nhập thì chuyển về trang chủ
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['role'] == 1) {
@@ -24,34 +14,10 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $error = '';
->>>>>>> 8677703faa6a9bfb0ecef8d5b05cb56b4fd31415
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
-<<<<<<< HEAD
-    // Truy vấn lấy thông tin người dùng
-    $sql = "SELECT * FROM users WHERE username = ?";
-    $stm = $conn->prepare($sql);
-    $stm->execute([$username]);
-    $user = $stm->fetch(PDO::FETCH_ASSOC);
-
-    if ($user && md5($password) === $user['password']) {
-        // Lưu thông tin vào session
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role']; // Thêm role vào session
-
-        // Chuyển hướng theo vai trò
-        if ($_SESSION['role'] == 1) {
-            header("Location: dashboard/dashboard.php");
-        } else {
-            header("Location: index.php");
-        }
-        exit();
-    } else {
-        echo "<script>toastr.error('Sai tên đăng nhập hoặc mật khẩu.');</script>";
-=======
     // Debug
     error_log("Login attempt - Username: " . $username);
 
@@ -64,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $error = "Sai tên đăng nhập hoặc mật khẩu!";
         error_log("Login failed for username: " . $username);
->>>>>>> 8677703faa6a9bfb0ecef8d5b05cb56b4fd31415
     }
 }
 ?>
@@ -108,3 +73,108 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </body>
 </html>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #ff9a9e;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #ff9a9e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #ff8087;
+}
+
+.error-message {
+    background: #ffe6e6;
+    color: #ff0000;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.links a {
+    color: #666;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.links a:hover {
+    color: #ff9a9e;
+}
+
+</style>
