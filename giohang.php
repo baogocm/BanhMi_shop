@@ -57,9 +57,9 @@ $items = $cart->getCartItemCount($_SESSION['user_id']);
 <?php endforeach; ?>
     </table>
     <h3>Tổng thanh toán: <?php echo number_format($totalAmount, 0, ',', '.'); ?> VND</h3>
-    <form method="POST" action="">
-    <button type="submit" name="order_cod" class="btn btn-primary">Đặt Hàng (COD)</button>
-    </form>
+    <form method="POST" action="checkout.php">
+    <button type="submit" name="proceed_to_checkout">Thanh toán</button>
+</form>
 
 </body>
 </html>

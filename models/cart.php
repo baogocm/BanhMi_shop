@@ -43,8 +43,12 @@ class Cart {
         } else {
             $_SESSION['cart'][$productId] = $quantity;
         }
+    
+        // Ghi log để kiểm tra
+        error_log("Thêm sản phẩm ID: $productId, số lượng mới: " . $_SESSION['cart'][$productId]);
         return true;
     }
+    
 
     public function removeFromCart($productId) {
         if (isset($_SESSION['cart'][$productId])) {
@@ -55,19 +59,22 @@ class Cart {
     }
     
 
-    public function increaseQuantity($productId) {
+     // Tăng số lượng sản phẩm
+     public function increaseQuantity($productId) {
         if (isset($_SESSION['cart'][$productId])) {
             $_SESSION['cart'][$productId]++;
             return true;
         }
         return false;
     }
+
+    // Giảm số lượng sản phẩm
     public function decreaseQuantity($productId) {
         if (isset($_SESSION['cart'][$productId]) && $_SESSION['cart'][$productId] > 1) {
             $_SESSION['cart'][$productId]--;
             return true;
         } elseif (isset($_SESSION['cart'][$productId])) {
-            unset($_SESSION['cart'][$productId]);
+            unset($_SESSION['cart'][$productId]); // Nếu số lượng là 1, xóa khỏi giỏ hàng
             return true;
         }
         return false;
@@ -91,6 +98,28 @@ class Cart {
         $stmt->bindParam(':product_id', $productId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function getCartItems() {
+        $items = [];
+        if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $productId => $quantity) {
+                $product = $this->getProductById($productId);
+                if ($product) {
+                    $items[] = [
+                        'product_id' => $productId,
+                        'name' => $product['name'],
+                        'price' => $product['price'],
+                        'quantity' => $quantity,
+                    ];
+                }
+            }
+        }
+        return $items;
+    }
+    
+    public function clearCart($userId) {
+        $_SESSION['cart'] = [];
+        return true;
     }
 }
 ?>
