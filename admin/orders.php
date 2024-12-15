@@ -16,6 +16,8 @@ $sql = "SELECT o.*, u.username
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $orders = $stmt->fetchAll();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +55,7 @@ $orders = $stmt->fetchAll();
                         <tr>
                             <td>#<?php echo $order['id']; ?></td>
                             <td><?php echo $order['username']; ?></td>
-                            <td><?php echo number_format($order['total_amount']); ?>đ</td>
+                            <td><?php echo number_format($order['total_price']); ?>đ</td>
                             <td>
                                 <span class="status-badge <?php echo strtolower($order['status']); ?>">
                                     <?php echo $order['status']; ?>

@@ -2,7 +2,9 @@
 require_once 'db/connect.php';
 require_once 'models/User.php'; 
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (isset($_SESSION['login_success']) && $_SESSION['login_success'] == true) {
     echo "<script>
@@ -25,6 +27,16 @@ if (file_exists("css/pages/{$current_page}.css")) {
     echo "<link rel='stylesheet' href='css/pages/{$current_page}.css'>";
 }
 
+require_once 'models/cart.php';
+
+$userId = $_SESSION['user_id'] ?? null;
+$cartItemCount = 0;
+
+if ($userId) {
+    $cartModel = new Cart($conn);
+    $cartItemCount = $cartModel->getCartItemCount($userId);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +48,7 @@ if (file_exists("css/pages/{$current_page}.css")) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
@@ -82,14 +95,26 @@ if (file_exists("css/pages/{$current_page}.css")) {
                                 <i class="fas fa-user"></i> Đăng nhập
                             </a>
                         <?php endif; ?>
+                        <div class="cart-icon">
+                            <a href="giohang.php">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="cart-count">
+                                    <?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?>
+                                </span>
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+    
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/giohang.js"></script>
 </body>
 </html>

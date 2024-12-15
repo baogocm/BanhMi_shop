@@ -86,5 +86,12 @@ class User {
         session_destroy();
         return true;
     }
+
+    public function getAllUsers() {
+        $sql = "SELECT id, email, username, password FROM users";
+        $stm = $this->db->prepare($sql);
+        $stm->execute();
+        return $stm->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

@@ -18,6 +18,9 @@
         <a href="users.php" <?php echo (basename($_SERVER['PHP_SELF']) == 'users.php') ? 'class="active"' : ''; ?>>
             <i class="fas fa-users"></i> Người Dùng
         </a>
+        <a href="../index.php">
+                    <i class="fas fa-home"></i> Trang Bán Hàng
+                </a>
         <a href="../logout.php">
             <i class="fas fa-sign-out-alt"></i> Đăng Xuất
         </a>

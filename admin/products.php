@@ -131,3 +131,4 @@ $productsWithCategories = array_map(function($product) use ($conn) {
     </div>
 </body>
 </html>
+                        
