@@ -1,125 +1,87 @@
 <?php
 class Cart {
-    private $db;
-
-    public function __construct($db) {
-        $this->db = $db;
-
+    private $conn;
+    
+    public function __construct($conn) {
+        $this->conn = $conn;
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
     }
-    public function getCartItemCount($userId) {
-        if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-            $items = [];
-            foreach ($_SESSION['cart'] as $productId => $quantity) {
-                $product = $this->getProductById($productId); // Lấy chi tiết sản phẩm từ DB
-                if ($product) {
-                    $items[] = [
-                        'product_id' => $productId,
-                        'name' => $product['name'],
-                        'price' => $product['price'],
-                        'quantity' => $quantity
-                    ];
-                }
+    // Thêm sản phẩm vào giỏ hàng
+    public function addItem($productId, $quantity = 1) {
+        // Kiểm tra sản phẩm có tồn tại
+        $sql = "SELECT id FROM products WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$productId]);
+        
+        if ($stmt->fetch()) {
+            if (isset($_SESSION['cart'][$productId])) {
+                $_SESSION['cart'][$productId] += $quantity;
+            } else {
+                $_SESSION['cart'][$productId] = $quantity;
             }
-            return $items;
+            return true;
         }
-        return []; // Nếu không có sản phẩm nào trong giỏ hàng
+        return false;
     }
-    
-    function getLatestProducts($conn, $limit) {
-        $sql = "SELECT id, name, description, price, image_url FROM products ORDER BY created_at DESC LIMIT :limit";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
-    
-    public function addToCart($productId, $quantity) {
-        if (isset($_SESSION['cart'][$productId])) {
-            $_SESSION['cart'][$productId] += $quantity;
-        } else {
-            $_SESSION['cart'][$productId] = $quantity;
-        }
-    
-        // Ghi log để kiểm tra
-        error_log("Thêm sản phẩm ID: $productId, số lượng mới: " . $_SESSION['cart'][$productId]);
-        return true;
-    }
-    
 
-    public function removeFromCart($productId) {
+    // Lấy sản phẩm trong giỏ hàng
+    public function getCartItems() {
+        $items = [];
+        foreach ($_SESSION['cart'] as $productId => $quantity) {
+            $sql = "SELECT id as product_id, name, price FROM products WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$productId]);
+            $product = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($product) {
+                $product['quantity'] = $quantity;
+                $items[] = $product;
+            }
+        }
+        return $items;
+    }
+
+    // Cập nhật số lượng
+    public function updateQuantity($productId, $change) {
+        if (isset($_SESSION['cart'][$productId])) {
+            $newQuantity = $_SESSION['cart'][$productId] + $change;
+            if ($newQuantity > 0) {
+                $_SESSION['cart'][$productId] = $newQuantity;
+            } else {
+                unset($_SESSION['cart'][$productId]);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    // Xóa sản phẩm
+    public function removeItem($productId) {
         if (isset($_SESSION['cart'][$productId])) {
             unset($_SESSION['cart'][$productId]);
             return true;
         }
         return false;
     }
-    
 
-     // Tăng số lượng sản phẩm
-     public function increaseQuantity($productId) {
-        if (isset($_SESSION['cart'][$productId])) {
-            $_SESSION['cart'][$productId]++;
-            return true;
-        }
-        return false;
-    }
-
-    // Giảm số lượng sản phẩm
-    public function decreaseQuantity($productId) {
-        if (isset($_SESSION['cart'][$productId]) && $_SESSION['cart'][$productId] > 1) {
-            $_SESSION['cart'][$productId]--;
-            return true;
-        } elseif (isset($_SESSION['cart'][$productId])) {
-            unset($_SESSION['cart'][$productId]); // Nếu số lượng là 1, xóa khỏi giỏ hàng
-            return true;
-        }
-        return false;
-    }
-    
-
+    // Tính tổng tiền
     public function calculateTotal() {
         $total = 0;
-        foreach ($_SESSION['cart'] as $productId => $quantity) {
-            $product = $this->getProductById($productId);
-            if ($product) {
-                $total += $product['price'] * $quantity;
-            }
+        foreach ($this->getCartItems() as $item) {
+            $total += $item['price'] * $item['quantity'];
         }
         return $total;
     }
 
-    public function getProductById($productId) {
-        $sql = "SELECT * FROM products WHERE id = :product_id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':product_id', $productId, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    // Đếm số lượng sản phẩm
+    public function getCartItemCount() {
+        return count($_SESSION['cart']);
     }
-    public function getCartItems() {
-        $items = [];
-        if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-            foreach ($_SESSION['cart'] as $productId => $quantity) {
-                $product = $this->getProductById($productId);
-                if ($product) {
-                    $items[] = [
-                        'product_id' => $productId,
-                        'name' => $product['name'],
-                        'price' => $product['price'],
-                        'quantity' => $quantity,
-                    ];
-                }
-            }
-        }
-        return $items;
-    }
-    
-    public function clearCart($userId) {
+
+    // Thêm phương thức clearCart
+    public function clearCart() {
         $_SESSION['cart'] = [];
         return true;
     }
 }
-?>

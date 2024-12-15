@@ -63,7 +63,9 @@ $categories = getAllCategories($conn);
                                     <div class='product-price'><?php echo number_format($product['price'], 0, ',', '.'); ?> VND</div>
                                 </div>
                                 <div class="product-action">
-                                    <button class='btn-add-cart w-100'><i class='fas fa-shopping-cart'></i> Thêm vào giỏ hàng</button>
+                                    <button class='btn-add-cart' data-product-id='<?php echo $product['id']; ?>'>
+                                        <i class='fas fa-shopping-cart'></i> Thêm vào giỏ hàng
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -77,35 +77,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_order'])) {
 <head>
     <meta charset="UTF-8">
     <title>Xác nhận đơn hàng</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages/checkout.css">
 </head>
 <body>
-    <h1>Thông tin thanh toán</h1>
-    <h3>Thông tin khách hàng</h3>
-    <p><strong>Tên:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
-    <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+    <div class="checkout-container">
+        <div class="customer-info">
+            <h3>Thông tin khách hàng</h3>
+            <p><strong>Tên:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
+            <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+        </div>
+        
+        <div class="order-details">
+            <h3>Chi tiết đơn hàng</h3>
+            <table class="order-table">
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng</th>
+                </tr>
+                <?php foreach ($items as $item): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($item['name']); ?></td>
+                    <td><?php echo number_format($item['price'], 0, ',', '.'); ?> VND</td>
+                    <td><?php echo $item['quantity']; ?></td>
+                    <td><?php echo number_format($item['price'] * $item['quantity'], 0, ',', '.'); ?> VND</td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <div class="total-amount">
+                Tổng thanh toán: <?php echo number_format($totalAmount, 0, ',', '.'); ?> VND
+            </div>
+        </div>
 
-    <h3>Chi tiết đơn hàng</h3>
-    <table>
-        <tr>
-            <th>Sản phẩm</th>
-            <th>Giá</th>
-            <th>Số lượng</th>
-            <th>Tổng</th>
-        </tr>
-        <?php foreach ($items as $item): ?>
-        <tr>
-            <td><?php echo htmlspecialchars($item['name']); ?></td>
-            <td><?php echo number_format($item['price'], 0, ',', '.'); ?> VND</td>
-            <td><?php echo $item['quantity']; ?></td>
-            <td><?php echo number_format($item['price'] * $item['quantity'], 0, ',', '.'); ?> VND</td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
-    <h3>Tổng thanh toán: <?php echo number_format($totalAmount, 0, ',', '.'); ?> VND</h3>
-
-    <form method="POST" action="">
-        <button type="submit" name="confirm_order" class="btn btn-primary">Xác nhận đặt hàng</button>
-    </form>
+        <form method="POST" action="">
+            <button type="submit" name="confirm_order" class="btn-confirm-order">Xác nhận đặt hàng</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -1,0 +1,82 @@
+/* Styles cho trang checkout (checkout.php) */
+.checkout-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.customer-info,
+.order-details {
+    margin-bottom: 30px;
+}
+
+.customer-info h3,
+.order-details h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.customer-info p {
+    margin: 5px 0;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-table th,
+.order-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.order-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.total-amount {
+    text-align: right;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.btn-confirm-order {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-confirm-order:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        padding: 15px;
+    }
+    
+    .order-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .order-table th,
+    .order-table td {
+        white-space: nowrap;
+    }
+}
