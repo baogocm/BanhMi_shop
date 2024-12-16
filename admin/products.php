@@ -19,7 +19,7 @@ if (isset($_GET['delete_id'])) {
 }
 
 // Phân trang
-$limit = 10;
+$limit = 5;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
