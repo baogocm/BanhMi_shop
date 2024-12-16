@@ -93,5 +93,21 @@ class User {
         $stm->execute();
         return $stm->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getUserByEmail($email) {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch();
+    }
+
+    public function registerGoogleUser($data) {
+        $stmt = $this->db->prepare("INSERT INTO users (username, email, name, password, role) VALUES (?, ?, ?, ?, 0)");
+        return $stmt->execute([
+            $data['username'],
+            $data['email'],
+            $data['name'],
+            $data['password']
+        ]);
+    }
 }
 ?>

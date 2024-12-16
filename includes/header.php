@@ -59,9 +59,9 @@ if ($userId) {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="form-inline my-2 my-lg-0 mr-auto">
+                <form class="form-inline my-2 my-lg-0 mr-auto" action="search.php" method="GET">
                     <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Tìm kiếm..." aria-label="Search">
+                        <input class="form-control" type="search" name="query" placeholder="Tìm kiếm..." aria-label="Search" required>
                         <div class="input-group-append">
                             <button class="search-btn" type="submit">
                                 <i class="fas fa-search"></i> Tìm kiếm
@@ -69,6 +69,7 @@ if ($userId) {
                         </div>
                     </div>
                 </form>
+
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="index.php"><i class="fas fa-home"></i> Trang Chủ</a>
@@ -110,11 +111,11 @@ if ($userId) {
     </nav>
     
 
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/giohang.js"></script>
+    <script src="js/search.js"></script>
 </body>
 </html>

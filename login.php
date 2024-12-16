@@ -27,14 +27,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     // Thử đăng nhập
     if ($userModel->login($username, $password)) {
-        // Chuyển hướng được xử lý trong hàm login
+        // Chuyển hướng dựa trên role
+        if ($_SESSION['role'] == 1) {
+            header("Location: admin/dashboard.php");
+        } else {
+            header("Location: index.php");
+        }
+        exit();
     } else {
         $error = "Sai tên đăng nhập hoặc mật khẩu!";
         error_log("Login failed for username: " . $username);
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -65,6 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <button type="submit">Đăng Nhập</button>
             </form>
+            
+            <div class="social-login">
+                <a href="google-login.php" class="google-btn">
+                    <i class="fab fa-google"></i> Đăng nhập với Google
+                </a>
+            </div>
             
             <div class="links">
                 <a href="forgot-password.php">Quên mật khẩu?</a>
@@ -178,4 +189,27 @@ button:hover {
     color: #ff9a9e;
 }
 
+.social-login {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.google-btn {
+    background: #fff;
+    color: #666;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.google-btn:hover {
+    background: #f7f7f7;
+}
+
+.google-btn i {
+    margin-right: 10px;
+}
 </style>

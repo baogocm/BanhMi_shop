@@ -85,13 +85,13 @@ $totalAmount = $cart->calculateTotal();
                 <?php foreach ($items as $item): ?>
                     <tr data-product-id="<?php echo $item['product_id']; ?>">
                         <td><?php echo htmlspecialchars($item['name']); ?></td>
-                        <td class="product-price"><?php echo number_format($item['price'], 0, ',', '.'); ?> VND</td>
+                        <td class="product-price"><?php echo number_format($item['price'], 0, ',', '.'); ?> đ</td>
                         <td>
                             <button class="btn-decrease-quantity">-</button>
                             <span class="quantity"><?php echo $item['quantity']; ?></span>
                             <button class="btn-increase-quantity">+</button>
                         </td>
-                        <td class="product-total"><?php echo number_format($item['price'] * $item['quantity'], 0, ',', '.'); ?> VND</td>
+                        <td class="product-total"><?php echo number_format($item['price'] * $item['quantity'], 0, ',', '.'); ?> đ</td>
                         <td>
                             <button class="btn-remove-from-cart">Xóa</button>
                         </td>
