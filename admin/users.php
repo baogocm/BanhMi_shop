@@ -26,14 +26,11 @@ $users = $stmt->fetchAll();
 </head>
 <body>
     <div class="admin-container">
-        <?php include 'includes/sidebar.php'; ?>
+        <?php include '../admin/includes/sidebar.php'; ?>
 
         <div class="main-content">
             <header class="top-bar">
                 <h1>Quản Lý Người Dùng</h1>
-                <a href="user-add.php" class="btn-add">
-                    <i class="fas fa-plus"></i> Thêm Người Dùng
-                </a>
             </header>
 
             <div class="content-box">
@@ -61,9 +58,9 @@ $users = $stmt->fetchAll();
                             </td>
                             <td><?php echo date('d/m/Y', strtotime($user['created_at'])); ?></td>
                             <td class="actions">
-                                <a href="user-edit.php?id=<?php echo $user['id']; ?>" class="btn-edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                            <a href="user-detail.php?id=<?php echo $user['id']; ?>" class="btn-view">
+                                <i class="fas fa-edit"></i>
+                            </a>
                                 <?php if ($user['id'] != $_SESSION['user_id']): ?>
                                 <a href="user-delete.php?id=<?php echo $user['id']; ?>" class="btn-delete" onclick="return confirm('Bạn có chắc muốn xóa người dùng này?')">
                                     <i class="fas fa-trash"></i>
