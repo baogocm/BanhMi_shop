@@ -1,28 +1,33 @@
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Về Chúng Tôi</h3>
-                <p>Bánh Mì Shop - Nơi mang đến cho bạn những ổ bánh mì thơm ngon nhất với chất lượng hàng đầu.</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Về Chúng Tôi</h5>
+                    <p>Bánh Mì Shop - Nơi cung cấp những ổ bánh mì ngon nhất với chất lượng hàng đầu.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liên Hệ</h5>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i> 180 Cao Lỗ, Quận 8, TP.HCM<br>
+                        <i class="fas fa-phone"></i> 0918812818<br>
+                        <i class="fas fa-envelope"></i> nguynbao756@gmail.com
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Theo Dõi Chúng Tôi</h5>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/giabao2210"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/giabao2210"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.twitter.com/giabao2210"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Liên Hệ</h3>
-                <p>Email: contact@banhmishop.com</p>
-                <p>Điện thoại: (84) 123-456-789</p>
-                <p>Địa chỉ: 123 Đường ABC, TP.HCM</p>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; <?php echo date('Y'); ?> Bánh Mì Shop. All rights reserved.</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Theo Dõi</h3>
-                <a href="#">Facebook</a><br>
-                <a href="#">Instagram</a><br>
-                <a href="#">Twitter</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Bánh Mì Shop. All rights reserved.</p>
         </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
 </body>
 </html>

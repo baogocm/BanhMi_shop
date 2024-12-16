@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Đặt Hàng Thành Công</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="css/pages/order_success.css">
 </head>
 
 <body>
+    <div class="success-container">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1 class="success-message">Cảm ơn bạn đã đặt hàng!</h1>
+        
+        <div class="order-details">
+            <h2>Đơn hàng của bạn đã được xác nhận</h2>
+            <p>Chúng tôi sẽ sớm liên hệ với bạn để xác nhận đơn hàng.</p>
+        </div>
 
-<div class="thank-you-card">
-    <h1>Xin Cám Ơn</h1>
-    <h2>Vì Đã Đặt HàngHàng</h2>
-    <hr>
-    <p>Chúng Tôi Hi VọngVọng</p>
-    <p>Có Thể Gặp Lại Bạn Trong Tương LaiLai<br>
-        <span class="social-handle">@banhmi_shop</span>
-    </p>
-</div>
-<script>
-    // Chuyển hướng sau 5 giây
-    setTimeout(function() {
-        window.location.href = "index.php";
-    }, 5000); // 5000ms = 5s
-</script>
+        <a href="index.php" class="btn-continue-shopping">
+            <i class="fas fa-shopping-cart"></i> Tiếp tục mua sắm
+        </a>
+    </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Chuyển hướng sau 5 giây
+        setTimeout(function() {
+            window.location.href = "index.php";
+        }, 5000);
+    </script>
 </body>
 </html>

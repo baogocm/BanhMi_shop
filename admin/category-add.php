@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Thêm danh mục
         if (addCategory($conn, $name)) {
-            header("Location: categories.php");
+            header("Location: categories.php?message=Thêm danh mục thành công!");
             exit();
         } else {
             $error = "Có lỗi xảy ra, vui lòng thử lại!";

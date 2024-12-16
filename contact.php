@@ -15,21 +15,21 @@ require_once 'includes/header.php';
                 <i class="fas fa-map-marker-alt"></i>
                 <div>
                     <h3>Địa Chỉ</h3>
-                    <p>123 Đường ABC, Quận XYZ, TP.HCM</p>
+                    <p>180 Cao Lỗ, Quận 8, TP.HCM</p>
                 </div>
             </div>
             <div class="info-item">
                 <i class="fas fa-phone"></i>
                 <div>
                     <h3>Điện Thoại</h3>
-                    <p>0123 456 789</p>
+                    <p>0918812818</p>
                 </div>
             </div>
             <div class="info-item">
                 <i class="fas fa-envelope"></i>
                 <div>
                     <h3>Email</h3>
-                    <p>info@banhmishop.com</p>
+                    <p>nguynbao756@gmail.com</p>
                 </div>
             </div>
         </div>

@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Cập nhật sản phẩm
         if (empty($error) && updateProduct($conn, $product_id, $data)) {
-            header("Location: products.php");
+            header("Location: products.php?message=Cập nhật sản phẩm thành công!");
             exit();
         } else {
             $error = "Có lỗi xảy ra, vui lòng thử lại!";

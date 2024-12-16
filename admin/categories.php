@@ -13,9 +13,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $category_id = (int)$_GET['id'];
     if (deleteCategory($conn, $category_id)) {
-        header("Location: categories.php");
+        header("Location: categories.php?message=Xóa danh mục thành công!");
+        exit();
     } else {
-        $error = "Không thể xóa danh mục này!";
+        header("Location: categories.php?error=Không thể xóa danh mục này vì đang có sản phẩm!");
+        exit();
     }
 }
 
@@ -32,6 +34,25 @@ $categories = getAllCategories($conn);
     <link rel="stylesheet" href="../css/admin/dashboard.css">
     <link rel="stylesheet" href="../css/admin/categories.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
 </head>
 <body>
     <div class="admin-container">
@@ -45,13 +66,19 @@ $categories = getAllCategories($conn);
                 </a>
             </header>
 
-            <div class="content-box">
-                <?php if (isset($error)): ?>
-                    <div class="alert alert-error">
-                        <?php echo $error; ?>
-                    </div>
-                <?php endif; ?>
+            <?php if (isset($_GET['message'])): ?>
+            <div class="message success">
+                <?php echo htmlspecialchars($_GET['message']); ?>
+            </div>
+            <?php endif; ?>
 
+            <?php if (isset($_GET['error'])): ?>
+            <div class="message error">
+                <?php echo htmlspecialchars($_GET['error']); ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="content-box">
                 <table class="data-table">
                     <thead>
                         <tr>

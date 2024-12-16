@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Thêm sản phẩm
         if (empty($error) && addProduct($conn, $data)) {
-            header("Location: products.php");
+            header("Location: products.php?message=Thêm sản phẩm thành công!");
             exit();
         } else {
             $error = "Có lỗi xảy ra, vui lòng thử lại!";

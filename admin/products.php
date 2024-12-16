@@ -13,7 +13,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 if (isset($_GET['delete_id'])) {
     $id = $_GET['delete_id'];
     if (deleteProduct($conn, $id)) {
-        header("Location: products.php?msg=deleted");
+        header("Location: products.php?message=Xóa sản phẩm thành công!");
+        exit();
+    } else {
+        header("Location: products.php?error=Không thể xóa sản phẩm này!");
         exit();
     }
 }
@@ -48,6 +51,25 @@ $productsWithCategories = array_map(function($product) use ($conn) {
     <link rel="stylesheet" href="../css/admin/dashboard.css">
     <link rel="stylesheet" href="../css/admin/products.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
 </head>
 <body>
     <div class="admin-container">
@@ -60,6 +82,18 @@ $productsWithCategories = array_map(function($product) use ($conn) {
                     <i class="fas fa-plus"></i> Thêm Sản Phẩm
                 </a>
             </header>
+
+            <?php if (isset($_GET['message'])): ?>
+            <div class="message success">
+                <?php echo htmlspecialchars($_GET['message']); ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if (isset($_GET['error'])): ?>
+            <div class="message error">
+                <?php echo htmlspecialchars($_GET['error']); ?>
+            </div>
+            <?php endif; ?>
 
             <?php if (isset($_GET['msg']) && $_GET['msg'] == 'deleted'): ?>
             <div class="alert alert-success">

@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Cập nhật danh mục
         if (updateCategory($conn, $category_id, $name)) {
-            header("Location: categories.php");
+            header("Location: categories.php?message=Cập nhật danh mục thành công!");
             exit();
         } else {
             $error = "Có lỗi xảy ra, vui lòng thử lại!";
