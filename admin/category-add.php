@@ -3,7 +3,7 @@ session_start();
 require_once '../db/connect.php';
 require_once '../models/category.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
@@ -15,11 +15,11 @@ $success = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']);
     
-    // Validate
+    
     if (empty($name)) {
         $error = "Vui lòng nhập tên danh mục";
     } else {
-        // Thêm danh mục
+        
         if (addCategory($conn, $name)) {
             header("Location: categories.php?message=Thêm danh mục thành công!");
             exit();

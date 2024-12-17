@@ -3,16 +3,16 @@ session_start();
 require_once '../db/connect.php';
 require_once '../models/user.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
 }
 
-// Khởi tạo đối tượng User
+
 $userObj = new User($conn);
 
-// Xử lý xóa khi người dùng xác nhận
+
 if (isset($_POST['confirm_delete']) && isset($_GET['id'])) {
     $user_id = $_GET['id'];
     

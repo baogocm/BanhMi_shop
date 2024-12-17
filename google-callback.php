@@ -6,8 +6,8 @@ session_start();
 
 // Google Client Configuration
 $client = new Google_Client();
-$client->setClientId('YOUR_CLIENT_ID');
-$client->setClientSecret('YOUR_CLIENT_SECRET');
+$client->setClientId('1034478529057-aqc0j8bh3d3ot5q7vu4k7v9qk3d0qdmv.apps.googleusercontent.com');
+$client->setClientSecret('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');
 $client->setRedirectUri('http://localhost/doanweb/google-callback.php');
 
 try {

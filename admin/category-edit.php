@@ -3,13 +3,13 @@ session_start();
 require_once '../db/connect.php';
 require_once '../models/category.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
 }
 
-// Kiểm tra ID
+
 if (!isset($_GET['id'])) {
     header("Location: categories.php");
     exit();
@@ -18,7 +18,7 @@ if (!isset($_GET['id'])) {
 $category_id = (int)$_GET['id'];
 $category = getCategoryById($conn, $category_id);
 
-// Nếu không tìm thấy danh mục
+
 if (!$category) {
     header("Location: categories.php");
     exit();
@@ -30,11 +30,11 @@ $success = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']);
     
-    // Validate
+
     if (empty($name)) {
         $error = "Vui lòng nhập tên danh mục";
     } else {
-        // Cập nhật danh mục
+
         if (updateCategory($conn, $category_id, $name)) {
             header("Location: categories.php?message=Cập nhật danh mục thành công!");
             exit();

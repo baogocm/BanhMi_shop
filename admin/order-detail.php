@@ -9,27 +9,27 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
 }
 
 
-// Kết nối model
+
 $orderModel = new Order($conn);
 
-// Lấy ID đơn hàng
+
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: orders.php");
     exit();
 }
 $order_id = $_GET['id'];
 
-// Lấy thông tin đơn hàng
+
 $order = $orderModel->getOrderById($order_id);
 if (!$order) {
     echo "<p>Không tìm thấy đơn hàng!</p>";
     exit();
 }
 
-// Lấy danh sách sản phẩm trong đơn hàng
+
 $order_items = $orderModel->getOrderItems($order_id);
 
-// Xử lý cập nhật trạng thái
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_status = $_POST['status'];
     if (in_array($new_status, ['pending', 'completed', 'cancelled'])) {

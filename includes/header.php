@@ -10,18 +10,18 @@ if (isset($_SESSION['login_success']) && $_SESSION['login_success'] == true) {
     echo "<script>
         toastr.success('Đăng nhập thành công!');
     </script>";
-    unset($_SESSION['login_success']);  // Xóa thông báo login thành công
+    unset($_SESSION['login_success']); 
 }
 
-// Kiểm tra nếu đăng nhập thành công
+
 if (isset($_SESSION['login_success']) && $_SESSION['login_success'] == true) {
     echo "<script>
         toastr.success('Đăng nhập thành công!');
     </script>";
-    unset($_SESSION['login_success']);  // Xóa thông báo sau khi đã hiển thị
+    unset($_SESSION['login_success']);
 }
 
-// Tự động load CSS dựa trên tên file PHP hiện tại
+
 $current_page = basename($_SERVER['PHP_SELF'], '.php');
 if (file_exists("css/pages/{$current_page}.css")) {
     echo "<link rel='stylesheet' href='css/pages/{$current_page}.css'>";

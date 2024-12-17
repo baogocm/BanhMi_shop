@@ -3,13 +3,13 @@ session_start();
 require_once '../db/connect.php';
 require_once '../models/category.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
 }
 
-// Xử lý xóa danh mục nếu có request
+
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $category_id = (int)$_GET['id'];
     if (deleteCategory($conn, $category_id)) {
@@ -21,7 +21,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     }
 }
 
-// Lấy danh sách danh mục
+
 $categories = getAllCategories($conn);
 ?>
 

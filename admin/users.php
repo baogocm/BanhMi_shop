@@ -2,13 +2,13 @@
 session_start();
 require_once '../db/connect.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
 }
 
-// Lấy danh sách người dùng
+
 $sql = "SELECT * FROM users ORDER BY id DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();

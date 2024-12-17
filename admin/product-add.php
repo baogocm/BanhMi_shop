@@ -4,7 +4,7 @@ require_once '../db/connect.php';
 require_once '../models/product.php';
 require_once '../models/category.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $price = (float)$_POST['price'];
     $category_id = (int)$_POST['category_id'];
     
-    // Validate
+    
     if (empty($name)) {
         $error = "Vui lòng nhập tên sản phẩm";
     } elseif (empty($price)) {
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'image_url' => ''
         ];
 
-        // Xử lý upload ảnh
+        
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $image_name = uploadProductImage($_FILES['image']);
             if ($image_name) {
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        // Thêm sản phẩm
+        
         if (empty($error) && addProduct($conn, $data)) {
             header("Location: products.php?message=Thêm sản phẩm thành công!");
             exit();

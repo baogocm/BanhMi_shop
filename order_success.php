@@ -24,7 +24,7 @@
     </div>
 
     <script>
-        // Chuyển hướng sau 5 giây
+        
         setTimeout(function() {
             window.location.href = "index.php";
         }, 5000);

@@ -2,13 +2,13 @@
 session_start();
 require_once '../db/connect.php';
 
-// Kiểm tra đăng nhập và role
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
 }
 
-// Lấy thống kê cơ bản
+
 $stats = [
     'total_products' => $conn->query("SELECT COUNT(*) FROM products")->fetchColumn(),
     'total_categories' => $conn->query("SELECT COUNT(*) FROM categories")->fetchColumn(),
@@ -113,7 +113,7 @@ $stats = [
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Thêm dữ liệu đơn hàng từ database -->
+                        
                     </tbody>
                 </table>
             </div>

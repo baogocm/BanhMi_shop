@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-	// Quản lý menu bên trái
+	
 	const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 	if (allSideMenu) {
 		allSideMenu.forEach(item => {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-	// Search Form
+	
 	const searchButton = document.querySelector('#content nav form .form-input button');
 	const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
 	const searchForm = document.querySelector('#content nav form');
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-	// Dark Mode Switch
+	
 	const switchMode = document.getElementById('switch-mode');
 	if (switchMode) {
 		switchMode.addEventListener('change', function () {

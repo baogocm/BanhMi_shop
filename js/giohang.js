@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Cấu hình Toastr
+
     toastr.options = {
         "closeButton": true,
         "progressBar": true,
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "timeOut": "3000"
     };
 
-    // Xử lý nút thêm vào giỏ hàng
+    
     document.querySelectorAll('.btn-add-cart').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Xử lý nút tăng/giảm số lượng trong giỏ hàng
+    
     const cartTable = document.querySelector('.cart-table');
     if (cartTable) {
         cartTable.addEventListener('click', function(e) {
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Hàm thêm vào giỏ hàng
+    
     function addToCart(productId) {
         fetch('giohang.php', {
             method: 'POST',
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Cập nhật số lượng trong header
+                
                 const cartCount = document.querySelector('.cart-count');
                 if (cartCount) {
                     cartCount.textContent = data.cartCount;
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Hàm cập nhật giỏ hàng
+    
     function updateCart(productId, change, row) {
         fetch('giohang.php', {
             method: 'POST',
@@ -101,20 +101,20 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Cập nhật số lượng
+                
                 const quantityElement = row.querySelector('.quantity');
                 const newQuantity = parseInt(quantityElement.textContent) + change;
                 quantityElement.textContent = newQuantity;
 
-                // Cập nhật tổng tiền sản phẩm
+                
                 const price = parseInt(row.querySelector('.product-price').textContent.replace(/[^\d]/g, ''));
                 const totalElement = row.querySelector('.product-total');
                 totalElement.textContent = formatCurrency(price * newQuantity);
 
-                // Cập nhật tổng giỏ hàng
+                
                 document.getElementById('cart-total').textContent = formatCurrency(data.total);
                 
-                // Cập nhật số lượng trong header
+                
                 const cartCount = document.querySelector('.cart-count');
                 if (cartCount) {
                     cartCount.textContent = data.cartCount;
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Hàm xóa sản phẩm
+    
     function removeFromCart(productId, row) {
         fetch('giohang.php', {
             method: 'POST',
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 row.remove();
                 document.getElementById('cart-total').textContent = formatCurrency(data.total);
                 
-                // Cập nhật số lượng trong header
+                
                 const cartCount = document.querySelector('.cart-count');
                 if (cartCount) {
                     cartCount.textContent = data.cartCount;
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Format tiền tệ
+    
     function formatCurrency(value) {
         return new Intl.NumberFormat('vi-VN', {
             style: 'currency',

@@ -4,13 +4,13 @@ require_once '../db/connect.php';
 require_once '../models/product.php';
 require_once '../models/category.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
 }
 
-// Kiểm tra ID
+
 if (!isset($_GET['id'])) {
     header("Location: products.php");
     exit();
@@ -20,7 +20,7 @@ $product_id = (int)$_GET['id'];
 $product = getProductById($conn, $product_id);
 $categories = getAllCategories($conn);
 
-// Nếu không tìm thấy sản phẩm
+
 if (!$product) {
     header("Location: products.php");
     exit();
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $price = (float)$_POST['price'];
     $category_id = (int)$_POST['category_id'];
     
-    // Validate
+    
     if (empty($name)) {
         $error = "Vui lòng nhập tên sản phẩm";
     } elseif (empty($price)) {
@@ -52,13 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'category_id' => $category_id
         ];
 
-        // Xử lý upload ảnh mới nếu có
+        
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $image_name = uploadProductImage($_FILES['image']);
             if ($image_name) {
                 $data['image_url'] = $image_name;
                 
-                // Xóa ảnh cũ
+                
                 if ($product['image_url']) {
                     $old_image = "../images/" . $product['image_url'];
                     if (file_exists($old_image)) {
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        // Cập nhật sản phẩm
+        
         if (empty($error) && updateProduct($conn, $product_id, $data)) {
             header("Location: products.php?message=Cập nhật sản phẩm thành công!");
             exit();

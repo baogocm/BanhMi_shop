@@ -2,13 +2,13 @@
 session_start();
 require_once '../db/connect.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
 }
 
-// Lấy danh sách đơn hàng
+
 $sql = "SELECT o.*, u.username 
         FROM orders o 
         LEFT JOIN users u ON o.user_id = u.id 

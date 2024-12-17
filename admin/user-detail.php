@@ -3,23 +3,23 @@ session_start();
 require_once '../db/connect.php';
 require_once '../models/user.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
 }
 
-// Tạo đối tượng User
+
 $userModel = new User($conn);
 
-// Lấy ID người dùng từ URL
+
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: users.php");
     exit();
 }
 $user_id = $_GET['id'];
 
-// Lấy thông tin người dùng
+
 $user = $userModel->getUserById($user_id);
 
 if (!$user) {
@@ -27,7 +27,7 @@ if (!$user) {
     exit();
 }
 
-// Xử lý cập nhật thông tin người dùng
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['update_user'])) {
         $username = $_POST['username'];
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Xử lý xóa người dùng
+   
     if (isset($_POST['delete_user'])) {
         $userModel->deleteUser($user_id);
         header("Location: users.php");

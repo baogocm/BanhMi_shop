@@ -3,13 +3,13 @@ session_start();
 require_once '../db/connect.php';
 require_once '../models/product.php';
 
-// Kiểm tra quyền admin
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 1) {
     header("Location: ../login.php");
     exit();
 }
 
-// Xử lý xóa sản phẩm nếu có id được gửi đến
+
 if (isset($_GET['delete_id'])) {
     $id = $_GET['delete_id'];
     if (deleteProduct($conn, $id)) {
@@ -21,17 +21,17 @@ if (isset($_GET['delete_id'])) {
     }
 }
 
-// Phân trang
+
 $limit = 5;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-// Lấy tổng số sản phẩm và danh sách sản phẩm
+
 $totalProducts = getTotalProducts($conn);
 $totalPages = ceil($totalProducts / $limit);
 $products = getProductsPaginated($conn, $limit, $offset);
 
-// Thêm thông tin danh mục
+
 $productsWithCategories = array_map(function($product) use ($conn) {
     $sql = "SELECT name FROM categories WHERE id = ?";
     $stmt = $conn->prepare($sql);

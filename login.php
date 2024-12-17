@@ -3,7 +3,7 @@ require_once 'db/connect.php';
 session_start();
 require_once 'models/user.php';
 
-// Nếu đã đăng nhập thì chuyển về trang chủ
+
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['role'] == 1) {
         header("Location: admin/dashboard.php");
@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['password'] = "Vui lòng nhập mật khẩu";
     }
 
-    // Nếu không có lỗi, tiến hành đăng nhập
+    
     if (empty($errors)) {
         $userModel = new User($conn);
         if ($userModel->login($username, $password)) {
-            // Đăng nhập thành công - chuyển hướng được xử lý trong hàm login
+            
             exit();
         } else {
             $errors['general'] = "Tên đăng nhập hoặc mật khẩu không đúng";
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Kiểm tra thông báo đăng ký thành công
+
 if (isset($_SESSION['register_success'])) {
     $register_success = true;
     unset($_SESSION['register_success']);
